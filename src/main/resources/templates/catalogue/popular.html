@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Popular Books</title>
+<link rel="stylesheet" th:href="@{/css/library.css}" />
+</head>
+<body>
+	
+	<nav>
+		<ul class="navbar">
+        	<li class="navbar-item"><a href="/catalogue">LIBRARY</a></li>
+        	<li class="navbar-item"><a href="/catalogue/popular">POPULAR BOOKS</a></li>
+        	<li class="navbar-item hidden"><a href="/favorites">FAVORITES</a></li>
+        	<li class="navbar-item push">
+        		<img alt="library Icon" src="https://th.bing.com/th/id/R.bd4999636e492f9bceebcc0e78cadeb2?rik=69LDw9U0pNoRLw&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_257113.png&ehk=mmhGIS1fel33kx9SiBsdzMbAccnvRYWdukwwZVVPrpI%3d&risl=&pid=ImgRaw&r=0">
+        	</li>
+        	
+        	<li class="navbar-item"><label th:text="${username}"></label></li>
+        	<li class="navbar-item"><label th:text="${role}"></label></li>
+        	<li class="navbar-item">
+            	<form th:action="@{/logout}" method="post">
+                	<input type="submit" value="Logout" /> 
+                	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            		</form>
+        	</li>
+    	</ul>
+	</nav>
+	
+	<header><h1>MOST POPULAR BOOKS</h1></header>
+	
+	<table>
+		<tr>
+		    <th class="cover">Cover</th>
+			<th class="title">Title</th>
+			<th class="fav">Liked by</th>
+		</tr>
+		
+		<th:block th:each="book : ${rankedBooks}">
+			<script>
+				var authors = "[[${book.totalStars}]]";
+				
+				console.log(authors);
+			</script>
+			<tr>
+				<td class="coverR"><img alt="coverTODO" th:src="${book.coverLink}"></td>
+				<td>
+					<a class="bookTitle"
+						th:href="|/catalogue/${book.isbn}|"
+						th:text="${book.title}"></a>
+				</td>
+				
+				
+				<td class="bookLikes">
+  					&#9733; <label th:text="${book.totalStars}"></label>
+				</td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+</html>

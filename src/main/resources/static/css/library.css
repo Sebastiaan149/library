@@ -1,0 +1,135 @@
+*{
+	margin: 0;
+	font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+form {
+	display: inline;
+}
+
+nav {
+    background-color: #f4f1ea;
+    height: 80px;
+    vertical-align: middle;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-item {
+	margin-left: 20px;
+	margin-right: 20px;
+	width: 125px;
+	text-align: center;
+}
+
+.navbar-item a {
+    text-decoration: none;
+    color: #000;
+}
+
+.navbar-item img {
+	height : 70px;
+	width : 70px;
+}
+
+.hidden{
+	visibility: hidden;
+}
+img {
+	height: 200px;
+	width: 125px;
+}
+
+table {
+    border: 1px solid gray;
+}
+
+table {
+    border-collapse: collapse;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;   
+}
+
+th {
+    background: #dbb98d;
+    font-size: large;
+    height: 50px;
+}
+
+.bookTitle{
+	padding-left: 50px;
+	text-decoration: none;
+	transition: 1s;
+}
+
+.bookTitle:hover{
+	text-decoration: underline;
+	font-size: large;
+}
+
+.bookLikes {
+	text-align: center;
+}
+
+.big {
+	font-size: large;
+	font-weight: bold;
+	padding-top: 20px;
+}
+
+.cover {
+	width : 15%;
+}
+
+.coverR{
+	text-align : center;
+	padding: 20px;
+}
+
+.title {
+	width: 65%;
+}
+
+.author {
+	width: 20%
+}
+
+.fav {
+	width: 20%
+}
+
+.error{
+    color:red;
+}
+.titleBookD{
+	margin-bottom: 60px;
+}
+.bookOverview{
+	margin-left: 100px;
+	margin-right: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.bookOverview img {
+	width: 250px;
+	height : 400px;
+}

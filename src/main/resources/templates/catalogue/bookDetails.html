@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Book</title>
+<link rel="stylesheet" th:href="@{/css/library.css}" />
+</head>
+<body>
+
+	<nav>
+		<ul class="navbar">
+        	<li class="navbar-item"><a href="/catalogue">LIBRARY</a></li>
+        	<li class="navbar-item"><a href="/catalogue/popular">POPULAR BOOKS</a></li>
+        	<li class="navbar-item hidden"><a href="/favorites">FAVORITES</a></li>
+        	<li class="navbar-item push">
+        		<img alt="library Icon" src="https://th.bing.com/th/id/R.bd4999636e492f9bceebcc0e78cadeb2?rik=69LDw9U0pNoRLw&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_257113.png&ehk=mmhGIS1fel33kx9SiBsdzMbAccnvRYWdukwwZVVPrpI%3d&risl=&pid=ImgRaw&r=0">
+        	</li>
+        	
+        	<li class="navbar-item"><label th:text="${username}"></label></li>
+        	<li class="navbar-item"><label th:text="${role}"></label></li>
+        	<li class="navbar-item">
+            	<form th:action="@{/logout}" method="post">
+                	<input type="submit" value="Logout" /> 
+                	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            		</form>
+        	</li>
+    	</ul>
+	</nav>
+
+	<h1 class="titleBookD">BOOK DETAILS</h1>
+	
+	<div class="bookOverview">
+		<div class="bookBasic">
+			<h2 th:text="${book.title}"></h2>
+			<img alt="cover image" th:src="${book.coverLink}">
+		</div>
+		<div class="bookDetails">
+			<p class="big">Author(s):</p>
+			<div>
+				<ul th:each="author : ${book.authors}">
+    				<li th:text="${author}"></li>
+  				</ul>
+  			</div>
+			
+			<p class="big">ISBN Number:</p>
+			<p th:text="${book.isbn}"></p>
+			
+			<p class="big">Purchase Price:</p>
+			<p>&euro; <span th:text="${{book.purchasePrice}}"></span></p>
+			
+			<p class="big">Total Stars:</p>
+			<p>&#9733; <span th:text="${book.totalStars}"></span></p>
+			
+			<p class="big">Location(s):</p>
+			<div>
+				<ul th:each="location : ${book.locations}">
+    				<li th:text="${location}"></li>
+  				</ul>
+			</div>
+			
+			<form th:if="${ not user.isFavorite(book) && (user.getTotalFavorites < user.maxFavorites)}" th:action="@{|/catalogue/${book.isbn}/${true}|}" method="post">
+				<input type="hidden" name="bookId" th:value="${book.isbn}" />
+				<button type="submit">ADD TO FAVORITES
+				</button>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+		    </form>
+		    <form th:if="${ user.isFavorite(book)}"  th:action="@{|/catalogue/${book.isbn}/${false}}" method="post">
+				<input type="hidden" name="bookId" th:value="${book.isbn}" />
+				<button type="submit">REMOVE FROM FAVORITES
+				</button>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+		    </form>
+		</div>
+	</div>
+
+</body>
+</html>

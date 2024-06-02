@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>ADD BOOK TODO</title>
+<link rel="stylesheet" th:href="@{/css/library.css}" />
+</head>
+<body>
+	<nav>
+		<ul class="navbar">
+        	<li class="navbar-item"><a href="/catalogue" th:text="|#{navbar_HOME}|"></a></li>
+        	<li class="navbar-item"><a href="/catalogue/popular" th:text="|#{navbar_pop}|"></a></li>
+        	<li class="navbar-item hidden"><a href="/favorites" th:text="|#{navbar_fav}|"></a></li>
+        	<li class="navbar-item push">
+        		<img alt="library Icon" src="https://th.bing.com/th/id/R.bd4999636e492f9bceebcc0e78cadeb2?rik=69LDw9U0pNoRLw&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_257113.png&ehk=mmhGIS1fel33kx9SiBsdzMbAccnvRYWdukwwZVVPrpI%3d&risl=&pid=ImgRaw&r=0">
+        	</li>
+        	
+        	<li class="navbar-item"><label th:text="${username}"></label></li>
+        	<li class="navbar-item"><label th:text="${role}"></label></li>
+        	<li class="navbar-item">
+            	<form th:action="@{/logout}" method="post">
+                	<input type="submit" th:value="|#{navbar_logOut}|" /> 
+                	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            		</form>
+        	</li>
+    	</ul>
+	</nav>
+
+	<h1 th:text="|#{addBook_title}|"></h1>
+	
+	<p>OPMERKING: VALIDATIE WERKT MAAR VOOR EEN OF ANDERE REDEN WORDT DEZE NIET GETOOND???</p>
+	
+	<form th:action="@{/editBook/add}" th:object="${newBook}" method="post">
+
+		<p>
+			<label th:text="|#{titleLabel}|"></label>
+			<input type="text" th:field="*{title}" required/>
+			<span th:if="${#fields.hasErrors('title')}" th:errorclass="error" th:errors="*{title}"></span>
+			
+		</p>
+		
+		<p>
+		
+			<label th:text="|#{authorLabel}|"></label>
+				<select th:field="*{authors[0]}" class="authors" required>
+					<option value="">Select an author</option>
+        			<option th:each="author : ${allAuthors}" th:value="${author.authorId}" th:text="${author}"
+        				th:selected="${newBook.authors[0]?.authorId == author.authorId}" />
+      			</select>
+				<select th:field="*{authors[1]}" class="authors">
+					<option value="">Select an author</option>
+        			<option th:each="author : ${allAuthors}" th:value="${author.authorId}" th:text="${author}"
+        				th:selected="${newBook.authors[1]?.authorId == author.authorId}" />
+      			</select>
+				<select th:field="*{authors[2]}" class="authors">
+					<option value="">Select an author</option>
+        			<option th:each="author : ${allAuthors}" th:value="${author.authorId}" th:text="${author}"
+        				th:selected="${newBook.authors[2]?.authorId == author.authorId}" />
+      			</select>
+		</p>
+
+		<p>
+			<label th:text="|#{ISBNLabel}|"></label>
+			<input type="text" th:field="*{isbn}" required/>
+			<span th:if="${#fields.hasErrors('isbn')}" th:errorclass="error" th:errors="*{isbn}"></span>
+		</p>
+		 
+		<p>
+			<label th:text="|#{priceLabel}|"></label>
+			<input type="text" th:field="*{purchasePrice}"/>
+		</p>
+		
+		<!-- 
+		
+		WERKT NIET
+		<p>
+			<label th:text="|#{locationsLabel}|"></label>
+			<div>
+				<div>
+					<p th:text="|#{locationLabel}|"></p>
+					<label th:text="|#{localcode}|"></label>
+					<input th:field="*{locations[0].localCode1}" th:value="" placeholder="" autocomplete="off" required type="text"/>
+					<label th:text="|#{localcode}|"></label>
+					<input th:field="*{locations[0].localCode2}" required type="text"/>
+					<label th:text="|#{locationName}|"></label>
+					<input th:field="*{locations[0].name}" required type="text"/>
+				</div>
+				<div>
+					<p th:text="|#{locationLabel}|"></p>
+					<label th:text="|#{localcode}|"></label>
+					<input th:field="*{locations[1].localCode1}" type="text"/>
+					<label th:text="|#{localcode}|"></label>
+					<input th:field="*{locations[1].localCode2}" type="text"/>
+					<label th:text="|#{locationName}|"></label>
+					<input th:field="*{locations[1].name}" type="text"/>
+				</div>
+				<div>
+					<p th:text="|#{locationLabel}|"></p>
+					<label th:text="|#{localcode}|"></label>
+					<input th:field="*{locations[2].localCode1}" type="text"/>
+					<label th:text="|#{localcode}|"></label>
+					<input th:field="*{locations[2].localCode2}" type="text"/>
+					<label th:text="|#{locationName}|"></label>
+					<input th:field="*{locations[2].name}" type="text"/>
+				</div>
+			</div>
+		</p>
+		
+		-->
+		
+		<p>
+			<label th:text="|#{imageUrl}|"></label>
+			<input type="text" th:field="*{coverLink}" required/>
+		</p>
+		
+		<div th:if="${#fields.hasErrors()}" class="error">
+			<ul>
+				<li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+			</ul>
+		</div>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+		<button type="submit" th:text="|#{submitButton}|"></button>
+		
+	</form>
+</body>
+</html>
